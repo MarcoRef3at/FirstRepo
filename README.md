@@ -4,7 +4,11 @@
 ```
 npm install
 ```
-
+### Install the dev dependencies
+```
+npm install node-sass --save-dev
+npm install bulma --save-dev
+```
 ### Compiles and hot-reloads for development
 ```
 npm run serve
