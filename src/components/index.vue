@@ -28,7 +28,7 @@
     </div>
 <!--Card No.2-->
     <!--Appears only if selectedFeature is not undefined-->
-    <div class="columns"  v-if="selectedFeature" >
+    <div class="columns" v-if="selectedFeature" >
       <div class="column is-3">
 <!--Card Header-->
         <header class="card-header">
