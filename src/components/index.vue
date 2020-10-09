@@ -25,11 +25,7 @@
           </li>
         </ul>
       </div>
-    </div>
-<!--Card No.2-->
-    <!--Appears only if selectedFeature is not undefined-->
-    <div class="columns" v-if="selectedFeature" >
-      <div class="column is-3">
+       <div class="column is-3" v-if="selectedFeature">
 <!--Card Header-->
         <header class="card-header">
           <p class="card-header-title" >{{ selectedFeature.name }}</p>
@@ -86,9 +82,12 @@
               </div>
           </div>
         </div>
-      </div>
+       </div>
     </div>
-    </div>
+<!--Card No.2-->
+    <!--Appears only if selectedFeature is not undefined-->
+   </div>
+
 </template>
 
 <script>
