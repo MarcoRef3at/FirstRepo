@@ -4,7 +4,7 @@
     <div class="main-section columns">
           <NavBar />
       <main class="column">
-        <Index />
+        <router-view></router-view>
       </main>
     </div>
   </div>
@@ -12,11 +12,11 @@
 
 <script>
 import HeaderBar from '@/components/header-bar';
-import Index from '@/components/index';
+
 import NavBar from '@/components/nav-bar';
 export default {
   name: 'App',
-  components: { HeaderBar, Index, NavBar },
+  components: { HeaderBar, NavBar },
 };
 </script>
 
