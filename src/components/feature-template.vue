@@ -74,29 +74,14 @@ export default {
         });
     },
 
-    updatePublished(status) {
-      var data = {
-        id: this.selectedFeature.id,
-        title: this.selectedFeature.title,
-        description: this.selectedFeature.description,
-        published: status
-      };
-
-      FeatureDataService.update(this.selectedFeature.id, data)
-        .then(response => {
-          this.selectedFeature.published = status;
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
+    
 
     updateFeature() {
       FeatureDataService.update(this.selectedFeature.id, this.selectedFeature)
         .then(response => {
           console.log(response.data);
           this.message = 'The feature was updated successfully!';
+          this.$router.push({ name: 'features' });
         })
         .catch(e => {
           console.log(e);
@@ -108,7 +93,7 @@ export default {
       this.selectedFeature.done = false;
     },
     cancelFeature() {
-     this.$emit('cancel');
+     this.$router.push({ name: 'features' });
     },
    
   },

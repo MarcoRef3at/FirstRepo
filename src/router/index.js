@@ -12,15 +12,15 @@ const routes = [
   {
     path: '/features',
     name: 'features',
-    component: Index
+    component: Index,
   },
   
   {
     path: "/features/:id",
     name: "feature-details",
     component: () => import("../components/feature-template"),
-    props: true
   },
+
   {
     path: "/add",
     name: "add",

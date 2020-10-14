@@ -80,7 +80,7 @@ export default {
         name: this.feature.name,
         description: this.feature.description,
         done: this.feature.done
-
+      
       };
 
       FeatureDataService.create(data)
@@ -88,6 +88,7 @@ export default {
           this.feature.id = response.data.id;
           console.log(response.data);
           this.submitted = true;
+          this.$router.push({ name: 'features' });
         })
         .catch(e => {
           console.log(e);
@@ -101,7 +102,7 @@ export default {
       this.selectedFeature.done = false;
     },
     cancelFeature() {
-     this.$emit('cancel');
+     this.$router.push({ name: 'features' });
     },
    
   },
