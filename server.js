@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to Marco's application." });
 });
 
-require("./app/routes/feature.routes")(app);
+require("./BackEnd/app/routes/feature.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8088;
@@ -31,7 +31,7 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
-const db = require("./app/models");
+const db = require("./BackEnd/app/models");
 db.mongoose
   .connect(db.url, {
     useNewUrlParser: true,
