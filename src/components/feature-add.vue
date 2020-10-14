@@ -1,9 +1,9 @@
 <template>
-  <div class="columns">
-    <div class="column is-8" v-if="selectedFeature">
+  <div class="columns" >
+    <div class="column is-8" v-if="!submitted">
       <!--Card Header-->
       <header class="card-header">
-        <p class="card-header-title">{{ selectedFeature.name }}</p>
+        <p class="card-header-title">Add Feature</p>
       </header>
       <!--Card Content-->
       <div class="card-content">
@@ -12,7 +12,7 @@
           <!--Name-->
           <div class="field">
             <label class="label" for="name">Name</label>
-            <input class="input" id="name" v-model="selectedFeature.name" />
+            <input class="input" id="name" v-model="feature.name" />
           </div>
           <!--Description-->
           <div class="field">
@@ -21,7 +21,7 @@
               class="input"
               id="description"
               type="text"
-              v-model="selectedFeature.description"
+              v-model="feature.description"
             />
           </div>
           <!--Done-->
@@ -29,7 +29,7 @@
             <label class="checkbox">
               <input
                 type="checkbox"
-                v-model="selectedFeature.done"
+                v-model="feature.done"
                 @keyup.esc="clearDone"
               />
               Done
@@ -44,66 +44,59 @@
               <i class="fas fa-undo"></i>
               <span>Cancel</span>
             </button>
-            <button class="link card-footer-item" @click="updateFeature">
+            <button class="link card-footer-item" @click="saveFeature()">
               <i class="fas fa-save"></i>
               <span>Save</span>
             </button>
+           
           </footer>
         </div>
       </div>
+    </div>
+     <div v-else>
+      <h4>You submitted successfully!</h4>
+      <button class="btn btn-success" @click="newTutorial">Add</button>
     </div>
   </div>
 </template>
 <script>
 import FeatureDataService from "../services/FeatureDataService";
 export default {
-  name: "FeatureDetail",
-  props: {
-    selectedFeature: null,
-   
+  name: "FeatureAdd",
+  data() {
+    return{
+    feature:{
+      id:null,
+      name : "",
+      description : "",
+      done:false,
+    },
+    submitted: false
+    };
   },
   methods: {
-    getFeature(id) {
-      FeatureDataService.get(id)
-        .then(response => {
-          this.selectedFeature = response.data;
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-
-    updatePublished(status) {
+    saveFeature() {
       var data = {
-        id: this.selectedFeature.id,
-        title: this.selectedFeature.title,
-        description: this.selectedFeature.description,
-        published: status
+        name: this.feature.name,
+        description: this.feature.description,
+        done: this.feature.done
+
       };
 
-      FeatureDataService.update(this.selectedFeature.id, data)
+      FeatureDataService.create(data)
         .then(response => {
-          this.selectedFeature.published = status;
+          this.feature.id = response.data.id;
           console.log(response.data);
+          this.submitted = true;
         })
         .catch(e => {
           console.log(e);
         });
     },
-
-    updateFeature() {
-      FeatureDataService.update(this.selectedFeature.id, this.selectedFeature)
-        .then(response => {
-          console.log(response.data);
-          this.message = 'The feature was updated successfully!';
-        })
-        .catch(e => {
-          console.log(e);
-        });
+    newFeature() {
+      this.submitted = false;
+      this.tutorial = {};
     },
-
-    
     clearDone() {
       this.selectedFeature.done = false;
     },
@@ -112,8 +105,6 @@ export default {
     },
    
   },
-  mounted() {
-    this.getFeature(this.$route.params.id);
-  }
+  
 };
 </script>

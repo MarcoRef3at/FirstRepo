@@ -3,27 +3,34 @@
   <div class="content-container">
     <div class="section content-title-group">
       <h2 class="title">ToDo List</h2>
+      <router-link
+        tag="button"
+        class="button add-button"
+        :to="{ name: 'add' }"
+      >
+        <i class="fas fa-plus"></i>
+      </router-link>
 
       <!--Card No.1-->
-      <div class="columns" v-if="!editing">
-        <div class="column is-3" >
+      <div class="columns">
+        <div class="column is-3">
           <!--Card Header-->
           <header class="card-header">
             <p class="card-header-title">
               Features List
-              <button class="button add-button fas fa-plus"></button>
             </p>
           </header>
           <!--Card List-->
-          <ul class="list" v-if="!editing">
+          <ul class="list" >
             <!--loop over the items in features list-->
             <li v-for="feature in features" :key="feature.id">
               <a
                 class="list-item"
-                @click="selectedFeature = feature"
+                @click="setActiveFeature(feature, index)"
                 :class="{
                   lineThrough: feature.done == true,
                   'is-active': selectedFeature == feature,
+                  active: index == currentIndex,
                   'is-activeAndDone':
                     (selectedFeature == feature) & (feature.done == true),
                 }"
@@ -36,174 +43,149 @@
 
         <!--Card No.2-->
         <!--Appears only if selectedFeature is not undefined-->
-
-        <div class="column is-3" v-if="selectedFeature" >
-          <!--Card Header-->
-          <header class="card-header" >
-            <p class="card-header-title">{{ selectedFeature.name }}</p>
-          </header>
-          <!--Card Content-->
-          <div class="card-content">
-            <div class="content">
-              <div class="field">
-                <!--id-->
-                <label class="label" for="id">id</label>
-                <label class="input" id="id" readonly>
-                  {{ selectedFeature.id }}
-                </label>
-              </div>
-              <!--Name-->
-              <div class="field">
-                <label class="label" for="name">Name</label>
-                <input class="input" id="name" v-model="selectedFeature.name" />
-              </div>
-              <!--ShowMore-->
-              <label class="checkbox">
-                <input
-                  type="checkbox"
-                  v-model="showMore"
-                  @keyup.esc="clearShowMore"
-                />
-                Show More
-              </label>
-              <!--Description-->
-              <!--Hidden until showMore is active-->
-              <div class="field" v-show="showMore">
-                <label class="label" for="description">description</label>
-                <textarea
-                  class="input"
-                  id="description"
-                  type="text"
-                  v-model="selectedFeature.description"
-                />
-              </div>
-              <!--Done-->
-              <div>
-                <label class="checkbox">
-                  <input
-                    type="checkbox"
-                    v-model="selectedFeature.done"
-                    @keyup.esc="clearDone"
-                  />
-                  Done
-                </label>
-              </div>
-              <!--Card Footer-->
-              <footer class="card-footer">
-                <button
-                  class="link card-footer-item"
-                  @click="editFeature(selectedFeature)"
-                >
-                  <i class="fas fa-check"></i>
-                  <span>Delete</span>
-                </button>
-                <button class="link card-footer-item"
-                @click="editMethod(selectedFeature)">
-                  <i class="fas fa-check"></i>
-                  <span>Edit</span>
-                </button>
-              </footer>
-            </div>
+         <!-- <div class="column is-3" v-if="selectedFeature" >
+        <det :selectedFeature="selectedFeature" />
+         </div> -->
+ 
+<div class="column is-3" v-if="selectedFeature">
+      <!--Card Header-->
+      <header class="card-header">
+        <p class="card-header-title">{{ selectedFeature.name }}</p>
+      </header>
+     <!--Card Content-->
+      <div class="card-content">
+        <div class="content">
+          
+          <!--Name-->
+          <div class="field">
+            <label class="label" for="name">Name</label>
+            <input class="input" id="name" v-model="selectedFeature.name" readonly/>
           </div>
+          <!--Description-->
+          <div class="field">
+            <label class="label" for="description">description</label>
+            <textarea
+              class="input"
+              id="description"
+              type="text"
+              v-model="selectedFeature.description"
+            readonly/>
+          </div>
+          <!--Done-->
+          <div>
+            <label class="checkbox">
+              <input
+                type="checkbox"
+                v-model="selectedFeature.done"
+                @keyup.esc="clearDone"
+              />
+              Done
+            </label>
+          </div>
+          <!--Card Footer-->
+          <footer class="card-footer">
+            <button
+              class="link card-footer-item cancel-button"
+              @click="deleteFeature()"
+            >
+              <i class="fas fa-undo"></i>
+              <span>Delete</span>
+            </button>
+            <a :href="'/features/' + selectedFeature.id" class="link card-footer-item ">
+              <i class="fas fa-save"></i>
+              <span>Edit</span></a>
+            
+          </footer>
         </div>
-        </div>
-         <edit 
-         v-if="editing" 
-         :selectedFeature="selectedFeature"
-         @cancel="cancelFeature"
-          @save="saveFeature"
-          />
-        
-      
+      </div>
+ </div>
+
+
+
+
+
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-//import FeatureDetails from "@/components/feature-detail";
-import edit from "@/components/feature-template";
-const ourFeatures = [
-  {
-    id: 10,
-    name: "Binding",
-    description: "Property binding",
-    done: false,
-  },
-  {
-    id: 20,
-    name: "Todo List",
-    description: "List of items",
-    done: false,
-  },
-  {
-    id: 30,
-    name: "Show More",
-    description: "CheckBox to show hidden fields",
-    done: false,
-  },
-  {
-    id: 40,
-    name: "Done",
-    description: "CheckBox to mark done items",
-    done: false,
-  },
-  {
-    id: 50,
-    name: "Escape Button",
-    description: 'Methods to reset "Show More" and "Done"',
-    done: false,
-  },
-];
+import FeatureDataService from "../services/FeatureDataService";
+
 export default {
   name: "Features",
   data() {
     return {
-      features: ourFeatures,
-      selectedFeature: undefined,
-      editing:undefined,
+      features: [],
+      selectedFeature: null,
+      currentIndex: -1,
       showMore: false,
     };
   },
-  components: {  edit },
+  // components: {  det },
   methods: {
-    clearShowMore() {
-      this.showMore = false;
+    
+     retrieveFeatures() {
+      FeatureDataService.getAll()
+        .then(response => {
+          this.features = response.data;
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     },
-    clearDone() {
-      this.selectedFeature.done = false;
+
+    refreshList() {
+      this.retrieveFeatures();
+      this.selectedFeature = null;
+      this.currentIndex = -1;
     },
-    // Fake Database loading -------------------------------------------------------------------------------------------------------------------------------DON'T FORGET TO CHANGE ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-    async getFeatures() {
-      return new Promise((resolve) => {
-        setTimeout(() => resolve(ourFeatures), 1000);
-        // return ourFeatures
-      });
+
+    setActiveFeature(feature, index) {
+      this.selectedFeature = feature;
+      this.currentIndex = index;
     },
-    async loadFeatures() {
-      this.features = [];
-      this.message = "Loading please wait";
-      this.features = await this.getFeatures();
-      this.message = "";
+
+    removeAllFeatures() {
+      FeatureDataService.deleteAll()
+        .then(response => {
+          console.log(response.data);
+          this.refreshList();
+        })
+        .catch(e => {
+          console.log(e);
+        });
     },
-    editFeature(feature) {
-      this.editedFeature = feature;
+    
+    searchTitle() {
+      FeatureDataService.findByTitle(this.title)
+        .then(response => {
+          this.features = response.data;
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     },
-    editMethod(feature){
-      this.editing = feature;
+   deleteFeature() {
+      FeatureDataService.delete(this.selectedFeature.id)
+        .then(response => {
+          console.log(response.data);
+          this.$router.push({ name: "features" });
+        })
+        .catch(e => {
+          console.log(e);
+        });
     },
-    cancelFeature(){
-    this.selectedFeature = undefined;
-    this.editing=undefined;
   },
-  saveFeature(feature){
-    const index = this.features.findIndex(h => h.id === feature.id);
-      this.features.splice(index, 1, feature);
-      this.features = [...this.features];
-      this.selectedFeature = undefined;
-      this.editing=undefined;
+  computed: {
+    //...mapState({features: 'features'}),
+    //...mapState(["features"]),
   },
-  },
-  
+  mounted() {
+    this.retrieveFeatures();
+  }
 };
 </script>
 

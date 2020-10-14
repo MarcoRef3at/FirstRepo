@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Features from '../views/index.vue'
+
+import Index from '../views/index.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -11,7 +12,19 @@ const routes = [
   {
     path: '/features',
     name: 'features',
-    component: Features
+    component: Index
+  },
+  
+  {
+    path: "/features/:id",
+    name: "feature-details",
+    component: () => import("../components/feature-template"),
+    props: true
+  },
+  {
+    path: "/add",
+    name: "add",
+    component: () => import("../components/feature-add"),
   },
   {
     path: '/about',
