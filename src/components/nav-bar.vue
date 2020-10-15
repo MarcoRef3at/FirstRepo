@@ -6,5 +6,4 @@
       <router-link to="/about">About</router-link>
     </ul>
   </nav>
-
 </template>

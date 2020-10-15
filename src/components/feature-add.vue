@@ -1,5 +1,5 @@
 <template>
-  <div class="columns" >
+  <div class="columns">
     <div class="column is-8" v-if="!submitted">
       <!--Card Header-->
       <header class="card-header">
@@ -8,7 +8,6 @@
       <!--Card Content-->
       <div class="card-content">
         <div class="content">
-          
           <!--Name-->
           <div class="field">
             <label class="label" for="name">Name</label>
@@ -48,12 +47,11 @@
               <i class="fas fa-save"></i>
               <span>Save</span>
             </button>
-           
           </footer>
         </div>
       </div>
     </div>
-     <div v-else>
+    <div v-else>
       <h4>You submitted successfully!</h4>
       <button class="btn btn-success" @click="newTutorial">Add</button>
     </div>
@@ -64,14 +62,14 @@ import FeatureDataService from "../services/FeatureDataService";
 export default {
   name: "FeatureAdd",
   data() {
-    return{
-    feature:{
-      id:null,
-      name : "",
-      description : "",
-      done:false,
-    },
-    submitted: false
+    return {
+      feature: {
+        id: null,
+        name: "",
+        description: "",
+        done: false,
+      },
+      submitted: false,
     };
   },
   methods: {
@@ -79,33 +77,26 @@ export default {
       var data = {
         name: this.feature.name,
         description: this.feature.description,
-        done: this.feature.done
-      
+        done: this.feature.done,
       };
 
       FeatureDataService.create(data)
-        .then(response => {
+        .then((response) => {
           this.feature.id = response.data.id;
           console.log(response.data);
           this.submitted = true;
-          this.$router.push({ name: 'features' });
+          this.$router.push({ name: "features" });
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
-    },
-    newFeature() {
-      this.submitted = false;
-      this.tutorial = {};
     },
     clearDone() {
       this.selectedFeature.done = false;
     },
     cancelFeature() {
-     this.$router.push({ name: 'features' });
+      this.$router.push({ name: "features" });
     },
-   
   },
-  
 };
 </script>

@@ -38,9 +38,6 @@
 
         <!--Card No.2-->
         <!--Appears only if selectedFeature is not undefined-->
-        <!-- <div class="column is-3" v-if="selectedFeature" >
-        <det :selectedFeature="selectedFeature" />
-         </div> -->
 
         <div class="column is-3" v-if="selectedFeature">
           <!--Card Header-->
@@ -71,20 +68,7 @@
                   readonly
                 />
               </div>
-              <!--Done-->
-              <!-- <div>
-            <label class="checkbox">
-              <input
-                type="checkbox"
-                v-model="selectedFeature.done"
-                @keyup.esc="clearDone"
-                @change="retrieveFeatures()"
 
-
-              />
-              Done
-            </label>
-          </div> -->
               <!--Card Footer-->
               <footer class="card-footer">
                 <button
@@ -106,8 +90,6 @@
             </div>
           </div>
         </div>
-      
-      
       </div>
     </div>
   </div>
@@ -115,7 +97,7 @@
 
 <script>
 import FeatureDataService from "../services/FeatureDataService";
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapState } from "vuex";
 export default {
   name: "Features",
   data() {
@@ -126,11 +108,11 @@ export default {
       message: "",
     };
   },
-   async created() {
-     await this.retrieveFeatures();
+  async created() {
+    await this.retrieveFeatures();
   },
   methods: {
-    ...mapActions(['getFeaturesAction']),
+    ...mapActions(["getFeaturesAction"]),
     retrieveFeatures() {
       this.message = "Getting Features from database, please be patient!";
       FeatureDataService.getAll()
@@ -138,17 +120,11 @@ export default {
           // this.features = response.data;
           this.getFeaturesAction();
           console.log(response.data);
-          this.message =''
+          this.message = "";
         })
         .catch((e) => {
           console.log(e);
         });
-    },
-
-    refreshList() {
-      this.retrieveFeatures();
-      this.selectedFeature = null;
-      this.currentIndex = -1;
     },
 
     setActiveFeature(feature, index) {
@@ -156,27 +132,6 @@ export default {
       this.currentIndex = index;
     },
 
-    removeAllFeatures() {
-      FeatureDataService.deleteAll()
-        .then((response) => {
-          console.log(response.data);
-          this.refreshList();
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
-
-    searchTitle() {
-      FeatureDataService.findByTitle(this.title)
-        .then((response) => {
-          this.features = response.data;
-          console.log(response.data);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
     deleteFeature() {
       FeatureDataService.delete(this.selectedFeature.id)
         .then((response) => {
@@ -192,32 +147,13 @@ export default {
       this.$router.push(url);
     },
   },
-  updateFeature() {
-    FeatureDataService.update(this.selectedFeature.id, this.selectedFeature)
-      .then((response) => {
-        console.log(response.data);
-        this.message = "The feature was updated successfully!";
-        this.retrieveFeatures();
-        this.selectedFeature = null;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  },
-  
-  computed: {
-    // features(){
 
-    //   return this.$store.state.features;
-      
-    // }
-    //...mapState({features: 'features'}),
+  computed: {
     ...mapState(["features"]),
   },
   mounted() {
     this.retrieveFeatures();
   },
-  
 };
 </script>
 

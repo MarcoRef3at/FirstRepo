@@ -8,7 +8,6 @@
       <!--Card Content-->
       <div class="card-content">
         <div class="content">
-          
           <!--Name-->
           <div class="field">
             <label class="label" for="name">Name</label>
@@ -60,45 +59,40 @@ export default {
   name: "FeatureDetail",
   props: {
     selectedFeature: null,
-   
   },
   methods: {
     getFeature(id) {
       FeatureDataService.get(id)
-        .then(response => {
+        .then((response) => {
           this.selectedFeature = response.data;
           console.log(response.data);
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },
-
-    
 
     updateFeature() {
       FeatureDataService.update(this.selectedFeature.id, this.selectedFeature)
-        .then(response => {
+        .then((response) => {
           console.log(response.data);
-          this.message = 'The feature was updated successfully!';
-          this.$router.push({ name: 'features' });
+          this.message = "The feature was updated successfully!";
+          this.$router.push({ name: "features" });
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },
 
-    
     clearDone() {
       this.selectedFeature.done = false;
     },
     cancelFeature() {
-     this.$router.push({ name: 'features' });
+      this.$router.push({ name: "features" });
     },
-   
   },
   mounted() {
     this.getFeature(this.$route.params.id);
-  }
+  },
 };
 </script>

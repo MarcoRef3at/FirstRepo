@@ -7,14 +7,14 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-   redirect: '/features',
+    redirect: '/features',
   },
   {
     path: '/features',
     name: 'features',
     component: Index,
   },
-  
+
   {
     path: "/features/:id",
     name: "feature-details",

@@ -2,7 +2,7 @@
   <div id="app">
     <HeaderBar />
     <div class="main-section columns">
-          <NavBar />
+      <NavBar />
       <main class="column">
         <router-view></router-view>
       </main>
@@ -11,15 +11,15 @@
 </template>
 
 <script>
-import HeaderBar from '@/components/header-bar';
+import HeaderBar from "@/components/header-bar";
 
-import NavBar from '@/components/nav-bar';
+import NavBar from "@/components/nav-bar";
 export default {
-  name: 'App',
+  name: "App",
   components: { HeaderBar, NavBar },
 };
 </script>
 
 <style lang="scss">
-@import '@/design/index.scss';
+@import "@/design/index.scss";
 </style>
