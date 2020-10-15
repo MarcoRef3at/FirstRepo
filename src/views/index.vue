@@ -18,7 +18,7 @@
           <!--Card List-->
           <ul class="list">
             <!--loop over the items in features list-->
-            <li v-for="feature in features" :key="feature.id">
+            <li v-for="(feature, index) in features" :key="feature.id">
               <a
                 class="list-item"
                 @click="setActiveFeature(feature, index)"
@@ -115,26 +115,28 @@
 
 <script>
 import FeatureDataService from "../services/FeatureDataService";
-
+import { mapActions, mapState } from 'vuex';
 export default {
   name: "Features",
   data() {
     return {
-      features: [],
+      // features: [],
       selectedFeature: null,
       currentIndex: -1,
       message: "",
     };
   },
-  async created() {
-    await this.retrieveFeatures();
+   async created() {
+     await this.retrieveFeatures();
   },
   methods: {
+    ...mapActions(['getFeaturesAction']),
     retrieveFeatures() {
       this.message = "Getting Features from database, please be patient!";
       FeatureDataService.getAll()
         .then((response) => {
-          this.features = response.data;
+          // this.features = response.data;
+          this.getFeaturesAction();
           console.log(response.data);
           this.message =''
         })
@@ -202,38 +204,20 @@ export default {
         console.log(e);
       });
   },
-  //   handleDone(Value) {
-  // const value = Value;
-  // switch (value) {
-  //   case 0:
-  //     this.selectedFeature.done = false;
-  //     this.updateFeature();
-  //     break;
-  //   case 1:
-  //     this.selectedFeature.done = true;
-  //     this.updateFeature();
-  //     break;
-
-  // }
-  // },
-
+  
   computed: {
+    // features(){
+
+    //   return this.$store.state.features;
+      
+    // }
     //...mapState({features: 'features'}),
-    //...mapState(["features"]),
+    ...mapState(["features"]),
   },
   mounted() {
     this.retrieveFeatures();
   },
-  // watch: {
-  //   'selectedFeature.done': {
-  //     immediate: true,
-  //     handler(newValue) {
-  //       this.handleDone(newValue);
-
-  //     },
-  //     selectedFeature:null,
-  //   },
-  // }
+  
 };
 </script>
 
