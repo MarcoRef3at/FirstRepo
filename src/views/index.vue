@@ -115,16 +115,8 @@ export default {
     ...mapActions(["getFeaturesAction"]),
     retrieveFeatures() {
       this.message = "Getting Features from database, please be patient!";
-      FeatureDataService.getAll()
-        .then((response) => {
-          // this.features = response.data;
-          this.getFeaturesAction();
-          console.log(response.data);
-          this.message = "";
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      this.getFeaturesAction();
+      this.message = "";
     },
 
     setActiveFeature(feature, index) {
