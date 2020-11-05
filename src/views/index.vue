@@ -34,6 +34,15 @@
               </a>
             </li>
           </ul>
+          <footer class="card-footer">
+          <button
+                  class="link card-footer-item"
+                  @click="printjs()"
+                >
+                  <i class="fas fa-print"></i>
+                  <span>Print JSON Data</span>
+                </button>
+          </footer>
         </div>
 
         <!--Card No.2-->
@@ -47,6 +56,7 @@
           <!--Card Content-->
           <div class="card-content">
             <div class="content">
+              <div id="printJS-form">
               <!--Name-->
               <div class="field">
                 <label class="label" for="name">Name</label>
@@ -68,7 +78,7 @@
                   readonly
                 />
               </div>
-
+</div>
               <!--Card Footer-->
               <footer class="card-footer">
                 <button
@@ -86,7 +96,16 @@
                   <i class="fas fa-edit"></i>
                   <span>Edit</span>
                 </button>
-              </footer>
+                 </footer>
+              <footer class="card-footer">
+                <button
+                  class="link card-footer-item"
+                  @click="printjs2()"
+                >
+                  <i class="fas fa-print"></i>
+                  <span>Print</span>
+                </button>
+                </footer>
             </div>
           </div>
         </div>
@@ -96,7 +115,8 @@
 </template>
 
 <script>
-import FeatureDataService from "../services/FeatureDataService";
+import print from 'print-js'
+ import FeatureDataService from "../services/FeatureDataService";
 import { mapActions, mapState } from "vuex";
 export default {
   name: "Features",
@@ -112,6 +132,12 @@ export default {
     await this.retrieveFeatures();
   },
   methods: {
+    printjs(){
+      print({printable: this.features, properties: ['name','done', 'description'], type: 'json'})
+    },
+    printjs2(){
+      print('printJS-form', 'html')
+    },
     ...mapActions(["getFeaturesAction"]),
     retrieveFeatures() {
       this.message = "Getting Features from database, please be patient!";
@@ -124,7 +150,7 @@ export default {
       this.currentIndex = index;
     },
 
-    deleteFeature() {
+     deleteFeature() {
       FeatureDataService.delete(this.selectedFeature.id)
         .then((response) => {
           console.log(response.data);
@@ -134,7 +160,7 @@ export default {
         .catch((e) => {
           console.log(e);
         });
-    },
+     },
     redirect(url) {
       this.$router.push(url);
     },
