@@ -17,6 +17,7 @@ import HeaderBarLinks from "@/components/header-bar-links";
 
 export default {
   name: "HeaderBar",
+  
   components: { HeaderBarBrand, HeaderBarLinks },
 };
 </script>

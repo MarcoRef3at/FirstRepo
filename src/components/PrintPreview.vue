@@ -1,9 +1,9 @@
 <template>
   <div class="content-container">
-    <div class="A4" id="A4-form">
+    <div class="A4" id="pdf" ref="testHtml">
       <v-select dir="rtl">
         <div class="header">
-          <div >
+          <div>
             <div class="logo">
               <div class="title">مديرية أمن الاسماعيلية</div>
               <div class="title">ادارة مرور الاسماعيلية</div>
@@ -112,13 +112,15 @@
         </div>
       </v-select>
 
-      <button class="link card-footer-item" @click="printjs2()">
+      <button class="link card-footer-item" @click="printDiv('pdf','Title')">
+        <i class="fas fa-print"></i>
+        <span>Print Preview</span>
+      </button>
+      <button class="link card-footer-item" @click="generatePdf()">
         <i class="fas fa-print"></i>
         <span>Print Preview</span>
       </button>
     </div>
-
-    
   </div>
 </template>
 <style scoped>
@@ -173,10 +175,10 @@ div .text {
 }
 </style>
 
-
 <script>
-import print from 'print-js'
+import print from "print-js";
 import FeatureDataService from "../services/FeatureDataService";
+import { jsPDF } from "jspdf";
 export default {
   name: "FeatureDetail",
   props: {
@@ -215,6 +217,53 @@ export default {
     printjs2() {
       print("A4-form", "html");
     },
+    saveDiv(divId, title) {
+      var doc = new jsPDF();
+      doc.fromHTML(
+        `<html><head><title>${title}</title></head><body>` +
+          document.getElementById(divId).innerHTML +
+          `</body></html>`
+      );
+      doc.save("div.pdf");
+    },
+     printDiv(divId, title) {
+      
+        let mywindow = window.open(
+          "",
+          "PRINT",
+          "height=650,width=900,top=100,left=150"
+        );
+
+        mywindow.document.write(`<html><head><title>${title}</title>`);
+        mywindow.document.write("</head><body >");
+        mywindow.document.write(document.getElementById(divId).innerHTML);
+        mywindow.document.write("</body></html>");
+
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10*/
+
+        mywindow.print();
+        mywindow.close();
+
+        return true;
+      },
+      generatePdf(){
+       var doc = new jsPDF('p', 'pt', 'A4');
+        var margins = {
+            top: 80,
+            bottom: 60,
+            left: 40,
+            width: 522
+        };
+      
+      doc.fromHTML(this.$refs.testHtml, margins.left, margins.top,{
+        'width' : margins.width
+      });
+      
+      doc.save('test.pdf');
+    }
+  
+    
   },
   mounted() {
     this.getFeature(this.$route.params.id);
