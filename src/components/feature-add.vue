@@ -8,32 +8,76 @@
       <!--Card Content-->
       <div class="card-content">
         <div class="content">
-          <!--Name-->
+          <!--transit_id-->
           <div class="field">
-            <label class="label" for="name">Name</label>
-            <input class="input" id="name" v-model="feature.name" />
+            <label class="label" for="transit_id">transit_id</label>
+            <input class="input" id="transit_id" v-model="feature.transit_id" />
           </div>
-          <!--Description-->
+          <!--device_name-->
           <div class="field">
-            <label class="label" for="description">description</label>
-            <textarea
+            <label class="label" for="device_name">device_name</label>
+            <input
               class="input"
-              id="description"
-              type="text"
-              v-model="feature.description"
+              id="device_name"
+              v-model="feature.device_name"
             />
           </div>
-          <!--Done-->
-          <div>
-            <label class="checkbox">
-              <input
-                type="checkbox"
-                v-model="feature.done"
-                @keyup.esc="clearDone"
-              />
-              Done
-            </label>
+          <!--plate_number-->
+          <div class="field">
+            <label class="label" for="plate_number">plate_number</label>
+            <input
+              class="input"
+              id="plate_number"
+              v-model="feature.plate_number"
+            />
           </div>
+          <!--country-->
+          <div class="field">
+            <label class="label" for="country">country</label>
+            <input class="input" id="country" v-model="feature.country" />
+          </div>
+          <!--date_time-->
+          <div class="field">
+            <label class="label" for="date_time">date_time</label>
+            <input class="input" id="date_time" v-model="feature.date_time" />
+          </div>
+          <!--speed-->
+          <div class="field">
+            <label class="label" for="speed">speed</label>
+            <input class="input" id="speed" v-model="feature.speed" />
+          </div>
+          <!--confidence_number-->
+          <div class="field">
+            <label class="label" for="confidence_number"
+              >confidence_number</label
+            >
+            <input
+              class="input"
+              id="confidence_number"
+              v-model="feature.confidence_number"
+            />
+          </div>
+          <!--brand-->
+          <div class="field">
+            <label class="label" for="brand">brand</label>
+            <input class="input" id="brand" v-model="feature.brand" />
+          </div>
+          <!--model-->
+          <div class="field">
+            <label class="label" for="model">model</label>
+            <input class="input" id="model" v-model="feature.model" />
+          </div>
+          <!--color-->
+          <div class="field">
+            <label class="label" for="color">color</label>
+            <input class="input" id="color" v-model="feature.color" />
+          </div>
+          <!--car_class-->
+          <div class="field">
+            <label class="label" for="car_class">car_class</label>
+            <input class="input" id="car_class" v-model="feature.car_class" />
+          </div>
+
           <!--Card Footer-->
           <footer class="card-footer">
             <button
@@ -65,9 +109,17 @@ export default {
     return {
       feature: {
         id: null,
-        name: "",
-        description: "",
-        done: false,
+        transit_id: "",
+        device_name: "",
+        plate_number: "",
+        country: "",
+        date_time: "",
+        speed: "",
+        confidence_number: "",
+        brand: "",
+        model: "",
+        color: "",
+        car_class: "",
       },
       submitted: false,
     };
@@ -75,9 +127,17 @@ export default {
   methods: {
     saveFeature() {
       var data = {
-        name: this.feature.name,
-        description: this.feature.description,
-        done: this.feature.done,
+        transit_id: this.feature.transit_id,
+        device_name: this.feature.device_name,
+        plate_number: this.feature.plate_number,
+        country: this.feature.country,
+        date_time: this.feature.date_time,
+        speed: this.feature.speed,
+        confidence_number: this.feature.confidence_number,
+        brand: this.feature.brand,
+        model: this.feature.model,
+        color: this.feature.color,
+        car_class: this.feature.car_class,
       };
 
       FeatureDataService.create(data)

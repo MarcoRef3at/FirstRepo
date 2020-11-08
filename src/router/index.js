@@ -20,6 +20,11 @@ const routes = [
     name: "feature-details",
     component: () => import("../components/feature-template"),
   },
+  {
+    path: "/print/:id",
+    name: "print_preview",
+    component: () => import("../components/PrintPreview"),
+  },
 
   {
     path: "/add",

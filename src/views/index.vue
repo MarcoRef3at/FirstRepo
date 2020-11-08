@@ -30,7 +30,7 @@
                     (selectedFeature == feature) & (feature.done == true),
                 }"
               >
-                <span>{{ feature.name }}</span>
+                <span>{{ feature.device_name }}</span>
               </a>
             </li>
           </ul>
@@ -100,10 +100,12 @@
               <footer class="card-footer">
                 <button
                   class="link card-footer-item"
-                  @click="printjs2()"
+                  @click="redirect('/print/' + selectedFeature.id)"
+                  
                 >
+                <!-- @click="printjs2()" -->
                   <i class="fas fa-print"></i>
-                  <span>Print</span>
+                  <span>Print Preview</span>
                 </button>
                 </footer>
             </div>

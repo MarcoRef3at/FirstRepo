@@ -2,9 +2,18 @@
   var schema = mongoose.Schema(
     {
       //id:_id,
-      name: String,
-      description: String,
-      done: Boolean
+      transit_id: String,
+      device_name: String,
+      plate_number: String,
+      country: String,
+      date_time: String,
+      speed: String,
+      confidence_number: String,
+      brand: String,
+      model: String,
+      color: String,
+      car_class: String,
+      
     },
     { timestamps: true }
   );

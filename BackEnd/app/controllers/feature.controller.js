@@ -4,7 +4,7 @@ const Feature = db.features;
 // Create and Save a new feature
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.name) {
+    if (!req.body.device_name) {
       res.status(400).send({ message: "Content can not be empty!" });
       return;
     }
@@ -12,9 +12,18 @@ exports.create = (req, res) => {
     // Create a feature
     const feature = new Feature({
 
-      name: req.body.name,
-      description: req.body.description,
-      done: req.body.done ? req.body.done : false
+      transit_id: req.body.transit_id,
+      device_name: req.body.device_name,
+      plate_number: req.body.plate_number,
+      country: req.body.country,
+      date_time: req.body.date_time,
+      speed: req.body.speed,
+      confidence_number: req.body.confidence_number,
+      brand: req.body.brand,
+      model: req.body.model,
+      color: req.body.color,
+      car_class: req.body.car_class,
+     
     });
   
     // Save feature in the database
