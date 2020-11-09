@@ -18,6 +18,26 @@ export default {
   name: "App",
   components: { HeaderBar, NavBar },
 };
+
+
+
+
+// <HeaderBar v-if="!isOnLoginPage()" />
+// methods: {
+  
+// isOnLoginPag: function () {
+//       return this.$route.path === "/print/";
+//     },
+//     isOnLoginPage () {
+//       return this.$route.path.startsWith("/print");
+//     },
+// }, 
+
+
+
+
+
+
 </script>
 
 <style lang="scss">

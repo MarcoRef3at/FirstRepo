@@ -1,133 +1,143 @@
 <template>
-  <div class="content-container">
-    <div class="A4" id="pdf" ref="testHtml">
-      <v-select dir="rtl">
-        <div class="header">
-          <div>
-            <div class="logo">
-              <div class="title">مديرية أمن الاسماعيلية</div>
-              <div class="title">ادارة مرور الاسماعيلية</div>
-            </div>
-            <div class="lable">
-              <div class="title">نموذج ١٢٥ مرور</div>
-              <div class="title">تقرير مخالفة مرور</div>
-            </div>
-          </div>
-        </div>
-        <div class="receipt-container">
-          <div class="column 1">
-            <div class="text">
-              <p>
-                <span> بتاريخ: </span>
-                <span> {{ selectedFeature.date_time }} </span>
-                &emsp;
-                <span> الساعة: </span>
-                <span> {{ selectedFeature.date_time }} </span>
-                &emsp;
-                <span> :بجهة </span>
-                <span>Data</span>
-              </p>
-              <p>
-                <span> اسم المخالف: </span>
-                <span> Data </span>
-                &emsp;
-                <span> عنوانه: </span>
-                <span> Data </span>
-              </p>
-              <p>
-                <span> رقم رخصة القيادة: </span>
-                <span> Data </span>
-                &emsp;
-                <span> نوعها و جهة صدورها: </span>
-                <span> Data </span>
-              </p>
-              <p>
-                <span> رقم المركبة: </span>
-                <span> {{ selectedFeature.plate_number }} </span>
-              </p>
-              <p class="center">وصف الاتهام</p>
-              <p class="center">Data</p>
-              <p>
-                <span>تم سحب رخصة القيادة (</span>
-                <span>Data</span>
-                <span>)&emsp;التسيير(</span>
-                <span>{{ selectedFeature.speed }}</span>
-                <span>)</span>
-              </p>
-              <p>
-                <span>مدة الايقاف(</span>
-                <span>{{ selectedFeature.confidence_number }}</span>
-                <span>)&emsp;الغاء(</span>
-                <span>{{ selectedFeature.brand }}</span>
-                <span>)م</span>
-              </p>
-              <p>
-                <span>تم التصالح بالايصال رقم:</span>
-                <span>{{ selectedFeature.transit_id }}</span>
-              </p>
-              <p>
-                <span>اسم و رتبة شاهد المخالفة:</span>
-                <span>Data</span>
-                &emsp;
-                <span>التوقيع:</span>
-                <span>Data</span>
-              </p>
-            </div>
-          </div>
-          <div class="column 2">
-            <div class="text">
-              <p class="center">بيانات خاصة بنيابة المرور</p>
-              <p>
-                <span>بتاريخ:</span>
-                <span>{{ selectedFeature.date_time }}</span>
-              </p>
-              <p>
-                <span>نحن:</span>
-                <span>Data </span>
-                &emsp;
-                <span>نحن</span>
-              </p>
-              <p>
-                <span>القائم بأعمال نيابة المرور </span>
-                <span>Data</span>
-                &emsp;
-                <span>نأمر بتغريم المخالف</span>
-              </p>
-              <p>
-                <span>مبلغ:</span>
-                <span>Data </span>
-                <span>قرش</span>
-              </p>
-              <p>
-                <span>كود المخالفة: </span>
-                <span>{{ selectedFeature.device_name }} </span>
-              </p>
-              <p>
-                <span>رقم القضية: </span>
-                <span>{{ selectedFeature.confidence_number }}</span>
-              </p>
-              <p class="left">وكيل النيابة</p>
-            </div>
-          </div>
-        </div>
-      </v-select>
+  <div class="content container">
 
-      <button class="link card-footer-item" @click="printDiv('pdf','Title')">
-        <i class="fas fa-print"></i>
-        <span>Print Preview</span>
+<button class="link card-footer-item" @click="printDiv('A4-form')">
+        <i class="fas fa-print">Print</i>
       </button>
-      <button class="link card-footer-item" @click="generatePdf()">
-        <i class="fas fa-print"></i>
-        <span>Print Preview</span>
-      </button>
+    <div class="A4">
+      <div id="A4-form">
+        <v-select dir="rtl">
+          <div class="header">
+            <div>
+              <div class="logo">
+                <p class="title">مديرية أمن الاسماعيلية</p>
+                <p class="title">ادارة مرور الاسماعيلية</p>
+              </div>
+              <div class="lable">
+                <p class="title">نموذج ١٢٥ مرور</p>
+                <p class="title">تقرير مخالفة مرور</p>
+              </div>
+            </div>
+          </div>
+          <div class="receipt-container">
+            <div class="column 1">
+              <div class="text">
+                <p>
+                  <span> بتاريخ: </span>
+                  <span> {{ selectedFeature.date_time }} </span>
+                  &emsp;
+                  <span> الساعة: </span>
+                  <span> {{ selectedFeature.date_time }} </span>
+                  &emsp;
+                  <span> :بجهة </span>
+                  <span>Data</span>
+                </p>
+                <p>
+                  <span> اسم المخالف: </span>
+                  <span> Data </span>
+                  &emsp;
+                  <span> عنوانه: </span>
+                  <span> Data </span>
+                </p>
+                <p>
+                  <span> رقم رخصة القيادة: </span>
+                  <span> Data </span>
+                  &emsp;
+                  <span> نوعها و جهة صدورها: </span>
+                  <span> Data </span>
+                </p>
+                <p>
+                  <span> رقم المركبة: </span>
+                  <span> {{ selectedFeature.plate_number }} </span>
+                </p>
+                <p class="center">وصف الاتهام</p>
+                <p class="center">Data</p>
+                <p>
+                  <span>تم سحب رخصة القيادة (</span>
+                  <span>Data</span>
+                  <span>)&emsp;التسيير(</span>
+                  <span>{{ selectedFeature.speed }}</span>
+                  <span>)</span>
+                </p>
+                <p>
+                  <span>مدة الايقاف(</span>
+                  <span>{{ selectedFeature.confidence_number }}</span>
+                  <span>)&emsp;الغاء(</span>
+                  <span>{{ selectedFeature.brand }}</span>
+                  <span>)م</span>
+                </p>
+                <p>
+                  <span>تم التصالح بالايصال رقم:</span>
+                  <span>{{ selectedFeature.transit_id }}</span>
+                </p>
+                <p>
+                  <span>اسم و رتبة شاهد المخالفة:</span>
+                  <span>Data</span>
+                  &emsp;
+                  <span>التوقيع:</span>
+                  <span>Data</span>
+                </p>
+              </div>
+            </div>
+            <div class="column 2">
+              <div class="text">
+                <p class="center">بيانات خاصة بنيابة المرور</p>
+                <p>
+                  <span>بتاريخ:</span>
+                  <span>{{ selectedFeature.date_time }}</span>
+                </p>
+                <p>
+                  <span>نحن:</span>
+                  <span>Data </span>
+                  &emsp;
+                  <span>نحن</span>
+                </p>
+                <p>
+                  <span>القائم بأعمال نيابة المرور </span>
+                  <span>Data</span>
+                  &emsp;
+                  <span>نأمر بتغريم المخالف</span>
+                </p>
+                <p>
+                  <span>مبلغ:</span>
+                  <span>Data </span>
+                  <span>قرش</span>
+                </p>
+                <p>
+                  <span>كود المخالفة: </span>
+                  <span>{{ selectedFeature.device_name }} </span>
+                </p>
+                <p>
+                  <span>رقم القضية: </span>
+                  <span>{{ selectedFeature.confidence_number }}</span>
+                </p>
+                <p class="lefttt">وكيل النيابة</p>
+              </div>
+            </div>
+          </div>
+        </v-select>
+      </div>
+      
+      
+
+
+
+
+ 
     </div>
   </div>
 </template>
 <style scoped>
+
+div {
+  margin-bottom: 0px;
+}
+
+
 .A4 {
   width: 21cm;
   height: 29.7cm;
-  border-style: solid;
+  border-style: dashed;
   padding: 10px;
   font-family: "Times New Roman", Times, serif;
 }
@@ -143,6 +153,7 @@
 .title {
   font-size: 12pt;
   font-weight: bold;
+  margin-bottom: 2pt;
 }
 .receipt-container {
   display: flex;
@@ -165,26 +176,43 @@ div .text {
   margin-left: auto;
   margin-right: auto;
 }
-.left {
-  text-align: left;
+.lefttt {
   float: left;
 }
-.right {
+.righttt {
   text-align: right;
-  float: left;
+  float: right;
 }
 </style>
 
 <script>
-import print from "print-js";
+
+
 import FeatureDataService from "../services/FeatureDataService";
-import { jsPDF } from "jspdf";
+
+
 export default {
+  
   name: "FeatureDetail",
   props: {
     selectedFeature: null,
   },
+
   methods: {
+    printDiv(divName){
+			var printContents = document.getElementById(divName).innerHTML;
+			var originalContents = document.body.innerHTML;
+
+			document.body.innerHTML = printContents;
+			window.print();
+
+			document.body.innerHTML = originalContents;
+
+    },
+    printpage() {
+      window.print();
+    },
+    
     getFeature(id) {
       FeatureDataService.get(id)
         .then((response) => {
@@ -214,63 +242,15 @@ export default {
     cancelFeature() {
       this.$router.push({ name: "features" });
     },
-    printjs2() {
-      print("A4-form", "html");
-    },
-    saveDiv(divId, title) {
-      var doc = new jsPDF();
-      doc.fromHTML(
-        `<html><head><title>${title}</title></head><body>` +
-          document.getElementById(divId).innerHTML +
-          `</body></html>`
-      );
-      doc.save("div.pdf");
-    },
-     printDiv(divId, title) {
-      
-        let mywindow = window.open(
-          "",
-          "PRINT",
-          "height=650,width=900,top=100,left=150"
-        );
-
-        mywindow.document.write(`<html><head><title>${title}</title>`);
-        mywindow.document.write("</head><body >");
-        mywindow.document.write(document.getElementById(divId).innerHTML);
-        mywindow.document.write("</body></html>");
-
-        mywindow.document.close(); // necessary for IE >= 10
-        mywindow.focus(); // necessary for IE >= 10*/
-
-        mywindow.print();
-        mywindow.close();
-
-        return true;
-      },
-      generatePdf(){
-       var doc = new jsPDF('p', 'pt', 'A4');
-        var margins = {
-            top: 80,
-            bottom: 60,
-            left: 40,
-            width: 522
-        };
-      
-      doc.fromHTML(this.$refs.testHtml, margins.left, margins.top,{
-        'width' : margins.width
-      });
-      
-      doc.save('test.pdf');
-    }
-  
     
   },
   mounted() {
     this.getFeature(this.$route.params.id);
   },
-  // created(){
-  //   this.printjs();
+  created(){
+    this.printjs();
+    this.printpage()
 
-  // }
+  }
 };
 </script>
