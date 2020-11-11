@@ -1,43 +1,53 @@
 <template>
-  <div id="app">
-    <HeaderBar />
-    <div class="main-section columns">
-      <NavBar />
-      <main class="column">
-        <router-view></router-view>
-      </main>
-    </div>
-  </div>
+  <q-layout view="lHh Lpr lFf">
+    <q-header elevated class="glossy">
+      <q-toolbar>
+        <q-btn
+          flat
+          dense
+          round
+          @click="leftDrawerOpen = !leftDrawerOpen"
+          aria-label="Menu"
+          icon="menu"
+        />
+
+        <q-toolbar-title>
+          Quasar App
+        </q-toolbar-title>
+
+        <div>Quasar v{{ $q.version }}</div>
+      </q-toolbar>
+    </q-header>
+    <q-drawer
+      v-model="leftDrawerOpen"
+      show-if-above
+      bordered
+      content-class="bg-grey-2"
+    >
+ <NavBar />
+    </q-drawer>
+
+    <q-page-container>
+      <router-view></router-view>
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script>
-import HeaderBar from "@/components/header-bar";
-
 import NavBar from "@/components/nav-bar";
+
 export default {
-  name: "App",
-  components: { HeaderBar, NavBar },
-};
+  name: 'LayoutDefault',
+  components: { NavBar },
 
-
-
-
-// <HeaderBar v-if="!isOnLoginPage()" />
-// methods: {
   
-// isOnLoginPag: function () {
-//       return this.$route.path === "/print/";
-//     },
-//     isOnLoginPage () {
-//       return this.$route.path.startsWith("/print");
-//     },
-// }, 
 
-
-
-
-
-
+  data () {
+    return {
+      leftDrawerOpen: false
+    }
+  }
+}
 </script>
 
 <style lang="scss">

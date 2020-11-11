@@ -7,8 +7,8 @@
         <i class="fas fa-plus"></i>
       </router-link>
 
-      <!--Card No.1-->
       <div class="columns">
+        <!--Card No.1-->
         <div class="column is-3">
           <!--Card Header-->
           <header class="card-header">
@@ -35,33 +35,17 @@
             </li>
           </ul>
           <footer class="card-footer">
-            <button class="link card-footer-item" @click="printDiv('printable')">
+            <button
+              class="link card-footer-item"
+              @click="printDiv('printable')"
+            >
               <i class="fas fa-print"></i>
               <span>Print All</span>
             </button>
           </footer>
         </div>
-        <!-- POPOUT -->
         
-        <q-dialog v-model="alert" v-if="selectedFeature">
-          <q-card>
-            <q-card-section>
-              <div class="text-h6">Alert</div>
-            </q-card-section>
 
-            <q-card-section class="q-pt-none">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum
-              repellendus sit voluptate voluptas eveniet porro. Rerum
-              blanditiis perferendis totam, ea at omnis vel numquam
-              exercitationem aut, natus minima, porro labore.
-            </q-card-section>
-
-            <q-card-actions align="right">
-              <q-btn flat label="OK" color="primary" v-close-popup />
-            </q-card-actions>
-          </q-card>
-        </q-dialog>
-      
         <!--Card No.2-->
         <!--Appears only if selectedFeature is not undefined-->
 
@@ -128,132 +112,280 @@
           </div>
         </div>
       </div>
-      <!-- loooooooop -->
-      <div id="printable">
-       <div id="loop" v-for="feature in features" :key="feature.id">
-     
-      <div class="A4">
-        <div id="A4-form">
-          <v-select dir="rtl">
-            <div class="header">
-              <div>
-                <div class="logo">
-                  <p class="titles">مديرية أمن الاسماعيلية</p>
-                  <p class="titles">ادارة مرور الاسماعيلية</p>
-                </div>
-                <div class="lable">
-                  <p class="titles">نموذج ١٢٥ مرور</p>
-                  <p class="titles">تقرير مخالفة مرور</p>
+      <div class="q-pa-md q-gutter-sm">
+        <q-btn
+          label="Print Preview"
+          color="primary"
+          @click="printPreview = true"
+        />
+
+        <!-- Popup -->
+
+        <q-dialog v-model="printPreview" >
+          <q-card style="width: 22cm; max-width: 25cm;">
+            <q-card-section>
+              <q-btn icon="close" flat round dense v-close-popup />
+              <!-- loooooooop -->
+              <div id="printablle">
+                <div id="loop" v-for="feature in features" :key="feature.id">
+                  <div class="A4">
+                    <div id="A4-form">
+                      <v-select dir="rtl">
+                        <div class="header">
+                          <div>
+                            <div class="logo">
+                              <p class="titles">مديرية أمن الاسماعيلية</p>
+                              <p class="titles">ادارة مرور الاسماعيلية</p>
+                            </div>
+                            <div class="lable">
+                              <p class="titles">نموذج ١٢٥ مرور</p>
+                              <p class="titles">تقرير مخالفة مرور</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="receipt-container">
+                          <div class="columnn 1">
+                            <div class="text">
+                              <p>
+                                <span> بتاريخ: </span>
+                                <span> {{ feature.date_time }} </span>
+                                &emsp;
+                                <span> الساعة: </span>
+                                <span> {{ feature.date_time }} </span>
+                                &emsp;
+                                <span> :بجهة </span>
+                                <span>Data</span>
+                              </p>
+                              <p>
+                                <span> اسم المخالف: </span>
+                                <span> Data </span>
+                                &emsp;
+                                <span> عنوانه: </span>
+                                <span> Data </span>
+                              </p>
+                              <p>
+                                <span> رقم رخصة القيادة: </span>
+                                <span> Data </span>
+                                &emsp;
+                                <span> نوعها و جهة صدورها: </span>
+                                <span> Data </span>
+                              </p>
+                              <p>
+                                <span> رقم المركبة: </span>
+                                <span> {{ feature.plate_number }} </span>
+                              </p>
+                              <p class="center">وصف الاتهام</p>
+                              <p class="center">Data</p>
+                              <p>
+                                <span>تم سحب رخصة القيادة (</span>
+                                <span>Data</span>
+                                <span>)&emsp;التسيير(</span>
+                                <span>{{ feature.speed }}</span>
+                                <span>)</span>
+                              </p>
+                              <p>
+                                <span>مدة الايقاف(</span>
+                                <span>{{ feature.confidence_number }}</span>
+                                <span>)&emsp;الغاء(</span>
+                                <span>{{ feature.brand }}</span>
+                                <span>)م</span>
+                              </p>
+                              <p>
+                                <span>تم التصالح بالايصال رقم:</span>
+                                <span>{{ feature.transit_id }}</span>
+                              </p>
+                              <p>
+                                <span>اسم و رتبة شاهد المخالفة:</span>
+                                <span>Data</span>
+                                &emsp;
+                                <span>التوقيع:</span>
+                                <span>Data</span>
+                              </p>
+                            </div>
+                          </div>
+                          <div class="columnn 2">
+                            <div class="text">
+                              <p class="center">بيانات خاصة بنيابة المرور</p>
+                              <p>
+                                <span>بتاريخ:</span>
+                                <span>{{ feature.date_time }}</span>
+                              </p>
+                              <p>
+                                <span>نحن:</span>
+                                <span>Data </span>
+                                &emsp;
+                                <span>نحن</span>
+                              </p>
+                              <p>
+                                <span>القائم بأعمال نيابة المرور </span>
+                                <span>Data</span>
+                                &emsp;
+                                <span>نأمر بتغريم المخالف</span>
+                              </p>
+                              <p>
+                                <span>مبلغ:</span>
+                                <span>Data </span>
+                                <span>قرش</span>
+                              </p>
+                              <p>
+                                <span>كود المخالفة: </span>
+                                <span>{{ feature.device_name }} </span>
+                              </p>
+                              <p>
+                                <span>رقم القضية: </span>
+                                <span>{{ feature.confidence_number }}</span>
+                              </p>
+                              <p class="lefttt">وكيل النيابة</p>
+                            </div>
+                          </div>
+                        </div>
+                      </v-select>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="receipt-container">
-              <div class="columnn 1">
-                <div class="text">
-                  <p>
-                    <span> بتاريخ: </span>
-                    <span> {{ feature.date_time }} </span>
-                    &emsp;
-                    <span> الساعة: </span>
-                    <span> {{ feature.date_time }} </span>
-                    &emsp;
-                    <span> :بجهة </span>
-                    <span>Data</span>
-                  </p>
-                  <p>
-                    <span> اسم المخالف: </span>
-                    <span> Data </span>
-                    &emsp;
-                    <span> عنوانه: </span>
-                    <span> Data </span>
-                  </p>
-                  <p>
-                    <span> رقم رخصة القيادة: </span>
-                    <span> Data </span>
-                    &emsp;
-                    <span> نوعها و جهة صدورها: </span>
-                    <span> Data </span>
-                  </p>
-                  <p>
-                    <span> رقم المركبة: </span>
-                    <span> {{ feature.plate_number }} </span>
-                  </p>
-                  <p class="center">وصف الاتهام</p>
-                  <p class="center">Data</p>
-                  <p>
-                    <span>تم سحب رخصة القيادة (</span>
-                    <span>Data</span>
-                    <span>)&emsp;التسيير(</span>
-                    <span>{{ feature.speed }}</span>
-                    <span>)</span>
-                  </p>
-                  <p>
-                    <span>مدة الايقاف(</span>
-                    <span>{{ feature.confidence_number }}</span>
-                    <span>)&emsp;الغاء(</span>
-                    <span>{{ feature.brand }}</span>
-                    <span>)م</span>
-                  </p>
-                  <p>
-                    <span>تم التصالح بالايصال رقم:</span>
-                    <span>{{ feature.transit_id }}</span>
-                  </p>
-                  <p>
-                    <span>اسم و رتبة شاهد المخالفة:</span>
-                    <span>Data</span>
-                    &emsp;
-                    <span>التوقيع:</span>
-                    <span>Data</span>
-                  </p>
+            </q-card-section>
+
+            <q-card-actions align="right">
+              <q-btn flat label="Cancel" color="primary" v-close-popup />
+              <q-btn
+                flat
+                label="Print"
+                color="primary"
+                @click="printDiv('printablle')"
+                v-close-popup
+              />
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
+        <!-- loooooooop -->
+              <div id="printable">
+                <div id="loop" v-for="feature in features" :key="feature.id">
+                  <div class="A4">
+                    <div id="A4-form">
+                      <v-select dir="rtl">
+                        <div class="header">
+                          <div>
+                            <div class="logo">
+                              <p class="titles">مديرية أمن الاسماعيلية</p>
+                              <p class="titles">ادارة مرور الاسماعيلية</p>
+                            </div>
+                            <div class="lable">
+                              <p class="titles">نموذج ١٢٥ مرور</p>
+                              <p class="titles">تقرير مخالفة مرور</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="receipt-container">
+                          <div class="columnn 1">
+                            <div class="text">
+                              <p>
+                                <span> بتاريخ: </span>
+                                <span> {{ feature.date_time }} </span>
+                                &emsp;
+                                <span> الساعة: </span>
+                                <span> {{ feature.date_time }} </span>
+                                &emsp;
+                                <span> :بجهة </span>
+                                <span>Data</span>
+                              </p>
+                              <p>
+                                <span> اسم المخالف: </span>
+                                <span> Data </span>
+                                &emsp;
+                                <span> عنوانه: </span>
+                                <span> Data </span>
+                              </p>
+                              <p>
+                                <span> رقم رخصة القيادة: </span>
+                                <span> Data </span>
+                                &emsp;
+                                <span> نوعها و جهة صدورها: </span>
+                                <span> Data </span>
+                              </p>
+                              <p>
+                                <span> رقم المركبة: </span>
+                                <span> {{ feature.plate_number }} </span>
+                              </p>
+                              <p class="center">وصف الاتهام</p>
+                              <p class="center">Data</p>
+                              <p>
+                                <span>تم سحب رخصة القيادة (</span>
+                                <span>Data</span>
+                                <span>)&emsp;التسيير(</span>
+                                <span>{{ feature.speed }}</span>
+                                <span>)</span>
+                              </p>
+                              <p>
+                                <span>مدة الايقاف(</span>
+                                <span>{{ feature.confidence_number }}</span>
+                                <span>)&emsp;الغاء(</span>
+                                <span>{{ feature.brand }}</span>
+                                <span>)م</span>
+                              </p>
+                              <p>
+                                <span>تم التصالح بالايصال رقم:</span>
+                                <span>{{ feature.transit_id }}</span>
+                              </p>
+                              <p>
+                                <span>اسم و رتبة شاهد المخالفة:</span>
+                                <span>Data</span>
+                                &emsp;
+                                <span>التوقيع:</span>
+                                <span>Data</span>
+                              </p>
+                            </div>
+                          </div>
+                          <div class="columnn 2">
+                            <div class="text">
+                              <p class="center">بيانات خاصة بنيابة المرور</p>
+                              <p>
+                                <span>بتاريخ:</span>
+                                <span>{{ feature.date_time }}</span>
+                              </p>
+                              <p>
+                                <span>نحن:</span>
+                                <span>Data </span>
+                                &emsp;
+                                <span>نحن</span>
+                              </p>
+                              <p>
+                                <span>القائم بأعمال نيابة المرور </span>
+                                <span>Data</span>
+                                &emsp;
+                                <span>نأمر بتغريم المخالف</span>
+                              </p>
+                              <p>
+                                <span>مبلغ:</span>
+                                <span>Data </span>
+                                <span>قرش</span>
+                              </p>
+                              <p>
+                                <span>كود المخالفة: </span>
+                                <span>{{ feature.device_name }} </span>
+                              </p>
+                              <p>
+                                <span>رقم القضية: </span>
+                                <span>{{ feature.confidence_number }}</span>
+                              </p>
+                              <p class="lefttt">وكيل النيابة</p>
+                            </div>
+                          </div>
+                        </div>
+                      </v-select>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="columnn 2">
-                <div class="text">
-                  <p class="center">بيانات خاصة بنيابة المرور</p>
-                  <p>
-                    <span>بتاريخ:</span>
-                    <span>{{ feature.date_time }}</span>
-                  </p>
-                  <p>
-                    <span>نحن:</span>
-                    <span>Data </span>
-                    &emsp;
-                    <span>نحن</span>
-                  </p>
-                  <p>
-                    <span>القائم بأعمال نيابة المرور </span>
-                    <span>Data</span>
-                    &emsp;
-                    <span>نأمر بتغريم المخالف</span>
-                  </p>
-                  <p>
-                    <span>مبلغ:</span>
-                    <span>Data </span>
-                    <span>قرش</span>
-                  </p>
-                  <p>
-                    <span>كود المخالفة: </span>
-                    <span>{{ feature.device_name }} </span>
-                  </p>
-                  <p>
-                    <span>رقم القضية: </span>
-                    <span>{{ feature.confidence_number }}</span>
-                  </p>
-                  <p class="lefttt">وكيل النيابة</p>
-                </div>
-              </div>
-            </div>
-          </v-select>
-        </div>
       </div>
-    </div>
-    </div>
     </div>
   </div>
 </template>
 <style scoped>
-@media print{
-  #A4-form{page-break-after: always;}
+@media print {
+  #A4-form {
+    page-break-after: always;
+  }
 }
 div {
   margin-bottom: 0px;
@@ -264,7 +396,7 @@ div {
   font-family: "Times New Roman", Times, serif;
 }
 .logo {
-  text-align: right;
+  text-align: left;
   margin-left: 7%;
   margin-top: 5px;
 }
@@ -318,6 +450,8 @@ export default {
       selectedFeature: null,
       currentIndex: -1,
       message: "",
+      printPreview: false,
+       icon: false,
     };
   },
   async created() {
@@ -341,7 +475,7 @@ export default {
       });
     },
     printjs2() {
-      print("printJS-form", "html");
+      print("printablle", "html");
     },
     ...mapActions(["getFeaturesAction"]),
     retrieveFeatures() {
@@ -379,6 +513,3 @@ export default {
   },
 };
 </script>
-
-
-
